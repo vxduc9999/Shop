@@ -1,18 +1,84 @@
-const users = require('../models/shop.models');
+const products = require('../models/shop.models').products;
+const users = require('../models/shop.models').users;
+const wishlists = require('../models/shop.models').wishlists;
+const sequelize = require('sequelize');
 const db = require('../config/db');
 
 // show all data
 exports.getHomePage = async (req, res, next) => {
-    users.findAll()
-        .then(users => {
-            res.status(200).render('index',
-                {
-                    title: 'Apple',
-                    users
-                }
-            );
+    all = []
+    products.findAll(
+        // new products
+        {
+            limit: 10,
+            order: [['updated_at', 'DESC']]
+        })
+        .then(productsNew => {
+            // best love products
+            products.findAll({
+                attributes: {
+                    include: [
+                        [sequelize.literal(
+                            `(
+                            SELECT COUNT(*) FROM "wishlists" 
+                            WHERE 
+                                "wishlists"."product_id" = "products"."product_id"
+                        )`),
+                            'totalProduct'
+                        ]
+                    ]
+                },
+                limit: 10,
+                order: [[sequelize.literal('"totalProduct"'), 'DESC']]
+            })
+                .then(wishlistsProducts => {
+                    // best selling products
+                    products.findAll({
+                        attributes: {
+                            include: [
+                                [sequelize.literal(
+                                    `(
+                                    SELECT COUNT(*) FROM "order_details" 
+                                    WHERE 
+                                        "order_details"."product_id" = "products"."product_id"
+                                )`),
+                                    'totalProduct'
+                                ]
+                            ]
+                        },
+                        limit: 10,
+                        order: [[sequelize.literal('"totalProduct"'), 'DESC']]
+                    })
+                        .then(bestSellingProducts => {
+                            //res.status(200).json(bestSellingProducts);
+                            const data = {
+                                newProducts: productsNew,
+                                bestLoveProducts: wishlistsProducts,
+                                bestSellingProducts: bestSellingProducts
+                            }
+                            res.status(200).render('homePage', {
+                                data: data
+                            })
+                        })
+                        .catch(err => console.log(err))
+                })
+                .catch(err => console.log(err))
         })
         .catch(err => console.log(err));
+
+    // products.findAll({ limit: 10 }) // products
+    //     .then(products => {
+    //         wishlists.findAll({ limit: 10 }) // wishlist
+    //             .then(wishlists => {
+    //                 const data = {
+    //                     products: products,
+    //                     wishlists: wishlists
+    //                 }
+    //                 res.status(200).json(data.wishlists);
+    //             })
+    //             .catch(err => console.log(err));
+    //     })
+    //     .catch(err => console.log(err));
 }
 
 // get add user

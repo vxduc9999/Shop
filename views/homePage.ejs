@@ -186,24 +186,31 @@
                     <div class="title" data-aos="zoom-in" data-aos-delay="200" style="margin-bottom: -100px;">
                         <h2>Sản Phẩm Bán Chạy Nhất</h2>
                     </div>
+
                     <div class="container" data-aos="zoom-in" data-aos-delay="200">
                         <div class="owl-carousel owl-theme blog-post">
-                            <div class="blog-content">
-                                <ul>
-                                    <span><i id="loveproduct" value="" class="fas fa-heart"></i></span>
-                                </ul>
-                                <a href="">
-                                    <div class="blog-header">
-                                        <img src="./images/pic1.jpg" alt="">
-                                        <!-- like proc -->
+                            <% for(let newProduct of data.newProducts) { %>
+                                <div class="blog-content">
+                                    <ul>
+                                        <span><i id="loveproduct" value="" class="fas fa-heart"></i></span>
+                                    </ul>
+                                    <a href="">
+                                        <div class="blog-header">
+                                            <img src="./images/pic1.jpg" alt="">
+                                            <!-- like proc -->
 
-                                    </div>
-                                    <div class="blog-title">
-                                        <h3>12Pro</h3>
-                                        <button class="btn btn-blog">1000VND</button>
-                                    </div>
-                                </a>
-                            </div>
+                                        </div>
+                                        <div class="blog-title">
+                                            <h3>
+                                                <%= newProduct.product_name %>
+                                            </h3>
+                                            <button class="btn btn-blog">
+                                                <%= newProduct.product_price %>VND
+                                            </button>
+                                        </div>
+                                    </a>
+                                </div>
+                                <% } %>
                         </div>
                         <div class="owl-navigation">
                             <span class="owl-nav-prev"><i class="fas fa-long-arrow-alt-left"></i></span>
@@ -220,37 +227,34 @@
                 </div>
 
                 <div class="product-center container" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="product">
-                        <ul>
-                            <div>
-                                <img src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-like.svg"
-                                    alt="no">
-                            </div>
-                        </ul>
-
-
-                        <a href="">
-                            <div class="product-header">
-                                <img src="./images/pic5.jpg" alt="">
-                                <ul class="icons">
-                                    <span><i class="fas fa-heart"></i></span>
-                                </ul>
-                            </div>
-                            <div class="product-footer">
-                                <a href="#">
-                                    <h3>11 Pro</h3>
-                                </a>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
+                    <% for(let sellProduct of data.bestSellingProducts) { %>
+                        <div class="product">
+                            <ul>
+                                <div>
+                                    <img src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-like.svg"
+                                        alt="no">
                                 </div>
-                                <h4 class="price">2000</h4>
-                            </div>
-                        </a>
-                    </div>
+                            </ul>
+                            <a href="">
+                                <div class="product-header">
+                                    <img src="./images/pic5.jpg" alt="">
+                                    <ul class="icons">
+                                        <span><i class="fas fa-heart"></i></span>
+                                    </ul>
+                                </div>
+                                <div class="product-footer">
+                                    <a href="#">
+                                        <h3>
+                                            <%= sellProduct.product_name %>
+                                        </h3>
+                                    </a>
+                                    <h4 class="price">
+                                        <%= sellProduct.product_price %>VND
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                        <% } %>
                 </div>
             </section>
 
@@ -278,30 +282,28 @@
                 </div>
 
                 <div class="product-center container" data-aos="fade-right" data-aos-delay="200">
-                    <div class="product-center container" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="product">
-                            <ul class="icons">
-                                <span><i id="loveproduct" value="" class="fas fa-heart"></i></span>
-                            </ul>
-                            <div class="product-header">
-                                <img src="./images/pic5.jpg" alt="">
-                            </div>
-                            <div class="product-footer">
-                                <a href="#">
-                                    <h3>IPhone</h3>
-                                </a>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
+                    <% for(let loveProduct of data.bestLoveProducts) { %>
+                        <div class="product-center container" data-aos="zoom-in" data-aos-delay="200">
+                            <div class="product">
+                                <ul class="icons">
+                                    <span><i id="loveproduct" value="" class="fas fa-heart"></i></span>
+                                </ul>
+                                <div class="product-header">
+                                    <img src="./images/pic5.jpg" alt="">
                                 </div>
-                                <h4 class="price">1000</h4>
+                                <div class="product-footer">
+                                    <a href="#">
+                                        <h3>
+                                            <%= loveProduct.product_name %>
+                                        </h3>
+                                    </a>
+                                    <h4 class="price">
+                                        <%= loveProduct.product_price %>VND
+                                    </h4>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                        <% } %>
             </section>
 
         </main>
