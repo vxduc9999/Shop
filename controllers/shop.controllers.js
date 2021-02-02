@@ -57,7 +57,8 @@ exports.getHomePage = async (req, res, next) => {
                                 bestSellingProducts: bestSellingProducts
                             }
                             res.status(200).render('homePage', {
-                                data: data
+                                data: data,
+                                isAuthenticated: false
                             })
                         })
                         .catch(err => console.log(err))

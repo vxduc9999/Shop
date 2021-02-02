@@ -107,6 +107,7 @@ const order_detail = db.define('order_detail', {
     timestamps: false
 });
 
+
 module.exports = {
     users,
     products,

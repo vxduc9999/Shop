@@ -13,7 +13,9 @@ app.use(bodyParser.json());
 const port = 3000
 
 const Shop = require('./routes/shopRoute');
+const User = require('./routes/userRoute');
 app.use(Shop);
+app.use(User);
 
 // // // get all
 // // app.get('/', async (req, res) => {
