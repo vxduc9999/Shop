@@ -52,18 +52,20 @@
             <ul>
                 <li><i class="fas fa-sign-in-alt" style="color: #ffffff;"></i></li>
                 <% if (!isAuthenticated) { %>
-                    <li class="An"><a href="file:///C:/Users/MyPC/Documents/Web/Login/LogIn.html"
-                            target="_blank"><b>Đăng
+                    <li class="An"><a href="/signin"><b>Đăng
                                 nhập</b></a></liclass="An">
                     <li><i class="fas fa-user"></i></li>
 
                     <li class="An">|</li class="An">
-                    <li class="An"><a href="file:///C:/Users/MyPC/Documents/Web/Login/Register.html"
-                            target="_blank"><b>Đăng
+                    <li class="An"><a href="/signup"><b>Đăng
                                 ký</b></a></li class="An">
                     <% } else { %>
-                        <li class="An"><a href="file:///C:/Users/MyPC/Documents/Web/Login/Register.html"
-                                target="_blank"><b>Đăng Xuất</b></a></li class="An">
+                        <form action="/logout" method="post">
+                            <button type="submit">
+                                <li class="An"><b>Đăng Xuất</b></a></li class="An">
+                            </button>
+
+                        </form>
                         <% } %>
             </ul>
         </div>
@@ -195,10 +197,7 @@
                         <div class="owl-carousel owl-theme blog-post">
                             <% for(let newProduct of data.newProducts) { %>
                                 <div class="blog-content">
-                                    <ul>
-                                        <span><i id="loveproduct" value="" class="fas fa-heart"></i></span>
-                                    </ul>
-                                    <a href="">
+                                    <a href="/detail/<%=newProduct.product_slug%>">
                                         <div class="blog-header">
                                             <img src="<%= 'images/'+ newProduct.product_thumbnail %>" alt="">
                                             <!-- like proc -->
@@ -233,13 +232,7 @@
                 <div class="product-center container" data-aos="zoom-in" data-aos-delay="200">
                     <% for(let sellProduct of data.bestSellingProducts) { %>
                         <div class="product">
-                            <ul>
-                                <div>
-                                    <img src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-like.svg"
-                                        alt="no">
-                                </div>
-                            </ul>
-                            <a href="">
+                            <a href="/detail/<%=sellProduct.product_slug%>">
                                 <div class="product-header">
                                     <img src="<%= 'images/'+ sellProduct.product_thumbnail %>" alt="">
                                     <ul class="icons">
@@ -288,24 +281,23 @@
                 <div class="product-center container" data-aos="fade-right" data-aos-delay="200">
                     <% for(let loveProduct of data.bestLoveProducts) { %>
                         <div class="product-center container" data-aos="zoom-in" data-aos-delay="200">
-                            <div class="product">
-                                <ul class="icons">
-                                    <span><i id="loveproduct" value="" class="fas fa-heart"></i></span>
-                                </ul>
-                                <div class="product-header">
-                                    <img src="<%= 'images/'+ loveProduct.product_thumbnail %>" alt="">
+                            <a href="/detail/<%=loveProduct.product_slug%>">
+                                <div class="product">
+                                    <div class="product-header">
+                                        <img src="<%= 'images/'+ loveProduct.product_thumbnail %>" alt="">
+                                    </div>
+                                    <div class="product-footer">
+                                        <a href="#">
+                                            <h3>
+                                                <%= loveProduct.product_name %>
+                                            </h3>
+                                        </a>
+                                        <h4 class="price">
+                                            <%= loveProduct.product_price %>VND
+                                        </h4>
+                                    </div>
                                 </div>
-                                <div class="product-footer">
-                                    <a href="#">
-                                        <h3>
-                                            <%= loveProduct.product_name %>
-                                        </h3>
-                                    </a>
-                                    <h4 class="price">
-                                        <%= loveProduct.product_price %>VND
-                                    </h4>
-                                </div>
-                            </div>
+                            </a>
                         </div>
                         <% } %>
             </section>

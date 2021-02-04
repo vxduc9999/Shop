@@ -1,8 +1,10 @@
 const products = require('../models/shop.models').products;
 const users = require('../models/shop.models').users;
 const wishlists = require('../models/shop.models').wishlists;
+const images = require('../models/shop.models').images;
 const sequelize = require('sequelize');
 const db = require('../config/db');
+const { Op } = require("sequelize");
 
 // show all data
 exports.getHomePage = async (req, res, next) => {
@@ -58,7 +60,7 @@ exports.getHomePage = async (req, res, next) => {
                             }
                             res.status(200).render('homePage', {
                                 data: data,
-                                isAuthenticated: false
+                                isAuthenticated: req.session.isLoggedIn
                             })
                         })
                         .catch(err => console.log(err))
@@ -66,22 +68,31 @@ exports.getHomePage = async (req, res, next) => {
                 .catch(err => console.log(err))
         })
         .catch(err => console.log(err));
-
-    // products.findAll({ limit: 10 }) // products
-    //     .then(products => {
-    //         wishlists.findAll({ limit: 10 }) // wishlist
-    //             .then(wishlists => {
-    //                 const data = {
-    //                     products: products,
-    //                     wishlists: wishlists
-    //                 }
-    //                 res.status(200).json(data.wishlists);
-    //             })
-    //             .catch(err => console.log(err));
-    //     })
-    //     .catch(err => console.log(err));
 }
 
+
+exports.getDetailProduct = (req, res, next) => {
+    const slug = req.params.slug;
+    products.findOne({
+        where: {
+            product_slug: {
+                [Op.eq]: slug
+            }
+        },
+        include: images
+    })
+        .then(product => {
+            res.status(200).render('products/productDetail', {
+                product
+            });
+        })
+        .catch(err => console.log(err))
+
+
+}
+
+
+// test
 // get add user
 exports.getAddToDB = (req, res, next) => {
     res.status(200).render('addUser');

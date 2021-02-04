@@ -6,6 +6,8 @@ const Shop = require('../controllers/shop.controllers');
 
 router.get('/', Shop.getHomePage);
 
+router.get('/detail/:slug', Shop.getDetailProduct);
+
 router.get('/add', Shop.getAddToDB);
 
 router.post('/add', Shop.addToDB);

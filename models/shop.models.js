@@ -1,15 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db');
 
-// users
-const users = db.define('users', {
-    name: {
-        type: Sequelize.STRING
-    }
-}, {
-    timestamps: false
-});
-
 
 // products
 const products = db.define('products', {
@@ -108,8 +99,36 @@ const order_detail = db.define('order_detail', {
 });
 
 
+// images
+const images = db.define('images', {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true
+    },
+    product_id: {
+        type: Sequelize.INTEGER
+    },
+    name: {
+        type: Sequelize.STRING
+    },
+    createdAt: {
+        type: Sequelize.DATE,
+        field: 'created_at'
+    },
+    updatedAt: {
+        type: Sequelize.DATE,
+        field: 'updated_at'
+    }
+}, {
+    timestamps: false
+});
+
+
+products.hasMany(images, { foreignKey: 'product_id' })
+images.belongsTo(products, { foreignKey: 'product_id' })
+
 module.exports = {
-    users,
     products,
-    wishlists
+    wishlists,
+    images
 };
