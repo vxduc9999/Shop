@@ -1,8 +1,14 @@
 const sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
+const Order = require('../models/order.models').orders;
 const User = require('../models/user.models').users;
+const Payment = require('../models/user.models').payment;
+const Status = require('../models/user.models').status_order;
+const Order_detail = require('../models/order.models').order_detail;
+const Product = require('../models/shop.models').products;
 const sgMail = require('@sendgrid/mail')
 const crypto = require('crypto');
+const { Op } = require('sequelize');
 
 // set key sendmail
 sgMail.setApiKey(process.env.sendgridAPIKey);
@@ -15,7 +21,7 @@ exports.getSignin = (req, res, next) => {
     });
 }
 
-exports.postSignin = async (req, res, next) => {
+exports.postSignin = async(req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const user = await User.findOne({ where: { email: email } });
@@ -24,8 +30,14 @@ exports.postSignin = async (req, res, next) => {
             if (result) {
                 req.session.isLoggedIn = true;
                 req.session.user = user;
-                return req.session.save(err => {
-                    console.log(err);
+                return req.session.save(async(err) => {
+                    if (await req.session.currentPage === "cart") {
+                        delete req.session.currentPage;
+                        res.redirect('/cart');
+                    } else if (await req.session.currentPage === "orderList") {
+                        delete req.session.currentPage;
+                        res.redirect('/user/order-list');
+                    }
                     res.redirect('/');
                 });
             } else {
@@ -43,17 +55,17 @@ exports.getSignup = (req, res, next) => {
 }
 
 // post signup with send mail verify
-exports.postSignup = async (req, res, next) => {
+exports.postSignup = async(req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const comfirmPassword = req.body.confirmPassword;
     const emailToken = crypto.randomBytes(64).toString('hex');
     if (email.trim() != "") {
         User.findOne({
-            where: {
-                email: email
-            }
-        })
+                where: {
+                    email: email
+                }
+            })
             .then(user => {
                 if (user)
                     return res.status(404).render('auth/signUp');
@@ -92,14 +104,13 @@ exports.postSignup = async (req, res, next) => {
                 }
             })
             .catch(err => console.log(err));
-    }
-    else {
+    } else {
         return res.status(404).render('auth/signUp');
     }
 }
 
 // verify email
-exports.getVerifyEmail = async (req, res, next) => {
+exports.getVerifyEmail = async(req, res, next) => {
     const user = await User.findOne({ where: { status: req.query.token } });
     user.status = null;
     await user.save();
@@ -129,7 +140,7 @@ function makeid(length) {
     return result;
 }
 
-exports.postForgotPassword = async (req, res, next) => {
+exports.postForgotPassword = async(req, res, next) => {
     const email = req.body.email;
     const user = await User.findOne({ where: { email: email } });
     if (!user) // not valid email
@@ -166,8 +177,7 @@ exports.postImportCode = (req, res, next) => {
     const code = req.body.code;
     if (code === req.session.code) {
         res.status(200).redirect('/changepassword')
-    }
-    else
+    } else
         res.redirect('/import-code')
 }
 
@@ -176,7 +186,7 @@ exports.getChangePassword = (req, res, next) => {
     res.status(200).render('auth/resetPassword');
 }
 
-exports.postChangePassword = async (req, res, next) => {
+exports.postChangePassword = async(req, res, next) => {
     const password = req.body.password;
     const comfirmPassword = req.body.comfirmPassword;
     if (password.trim() !== "" && comfirmPassword.trim() !== "" && password === comfirmPassword) {
@@ -187,4 +197,43 @@ exports.postChangePassword = async (req, res, next) => {
         delete req.session.code;
         return res.status(200).redirect('/')
     }
+}
+
+
+exports.orderList = async(req, res, next) => {
+    const user = req.session.user;
+    if (user == null) {
+        req.session.currentPage = "orderList";
+        res.redirect('/signin');
+    }
+    await Order.findAll({
+            where: {
+                user_id: user.id,
+                status: {
+                    [Op.not]: null
+                }
+            },
+            include: [{
+                    model: Payment,
+                    as: 'payment'
+                },
+                {
+                    model: Status,
+                    as: 'status_order'
+                },
+                {
+                    model: Order_detail,
+                    as: 'details',
+                    include: [{
+                        model: Product
+                    }]
+                }
+            ]
+        })
+        .then(result => {
+            res.status(200).render('auth/listpurchase', {
+                orders: result
+            })
+        })
+        .catch(err => console.log(err));
 }

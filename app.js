@@ -17,6 +17,7 @@ const port = process.env.PORT
 
 const Shop = require('./routes/shopRoute');
 const User = require('./routes/userRoute');
+const Cart = require('./routes/cartRoute');
 
 // setting session
 app.use(session({
@@ -39,10 +40,8 @@ app.use((req, res, next) => {
 
 app.use(Shop);
 app.use(User);
+app.use(Cart);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
-
-
-

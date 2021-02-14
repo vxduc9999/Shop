@@ -7,9 +7,7 @@
     <title>Details</title>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/styleDetails.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -89,8 +87,7 @@
                             <%= product.product_description %>
                         </p>
                         <p class="paragraph" style="display: none;">
-                            - Trong 30 ngày đầu nhập lại máy, trừ phí 20% trên giá
-                            hiện tại(hoặc giá mua nếu giá mua thấp hơn giá hiện tại).
+                            - Trong 30 ngày đầu nhập lại máy, trừ phí 20% trên giá hiện tại(hoặc giá mua nếu giá mua thấp hơn giá hiện tại).
                             </br>
                             - Ra khỏi cửa hàng thì đéo được đổi nha</p>
                     </div>
@@ -99,7 +96,7 @@
                     <p><b>Sản phẩm đã hết hàng</b></p>
                     <div class="quantity">
                         <h4><b>Số lượng</b></h4>
-                        <input type="hidden" id="maxQuantity" value="">
+                        <!-- <input type="hidden" id="maxQuantity" value=""> -->
                         <input type="number" style="outline: none;" name="items" id="counter" min="1" value="1">
                     </div>
 
@@ -108,9 +105,9 @@
                     <div class="buttons">
                         <button id="add-to-cart"><i class="fas fa-shopping-cart"></i>THÊM VÀO GIỎ
                             HÀNG</button>
-                        <form action="" method="post">
-                            <input type="hidden" name="product_name" value="">
-                            <input type="hidden" name="price" value="">
+                        <form action="" method="post" onsubmit="getQuantity()">
+                            <input type="hidden" name="product_id" value="<%= product.id %>">
+                            <input type="hidden" name="price" value="<%= product.product_price %>">
                             <input type="hidden" id="quantity" name="quantity">
                             <button id="btn" type="submit">MUA NGAY</button>
                         </form>
@@ -144,8 +141,7 @@
                     </div>
                     <div class="pull-left" style="width:180px;">
                         <div class="progress" style="height:9px; margin:8px 0;">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5"
-                                aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="5" style="width: 1000%">
                                 <span class="sr-only">80% Complete (danger)</span>
                             </div>
                         </div>
@@ -158,8 +154,7 @@
                     </div>
                     <div class="pull-left" style="width:180px;">
                         <div class="progress" style="height:9px; margin:8px 0;">
-                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4"
-                                aria-valuemin="0" aria-valuemax="5" style="width: 80%">
+                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5" style="width: 80%">
                                 <span class="sr-only">80% Complete (danger)</span>
                             </div>
                         </div>
@@ -172,8 +167,7 @@
                     </div>
                     <div class="pull-left" style="width:180px;">
                         <div class="progress" style="height:9px; margin:8px 0;">
-                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3"
-                                aria-valuemin="0" aria-valuemax="5" style="width: 60%">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5" style="width: 60%">
                                 <span class="sr-only">80% Complete (danger)</span>
                             </div>
                         </div>
@@ -186,8 +180,7 @@
                     </div>
                     <div class="pull-left" style="width:180px;">
                         <div class="progress" style="height:9px; margin:8px 0;">
-                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2"
-                                aria-valuemin="0" aria-valuemax="5" style="width: 40%">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5" style="width: 40%">
                                 <span class="sr-only">80% Complete (danger)</span>
                             </div>
                         </div>
@@ -200,8 +193,7 @@
                     </div>
                     <div class="pull-left" style="width:180px;">
                         <div class="progress" style="height:9px; margin:8px 0;">
-                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1"
-                                aria-valuemin="0" aria-valuemax="5" style="width: 20%">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5" style="width: 20%">
                                 <span class="sr-only">80% Complete (danger)</span>
                             </div>
                         </div>
@@ -234,10 +226,8 @@
                                 <p>this was nice in buy</p>
                             </div>
                             <div class="review-block-description">
-                                <p>this was nice in buy. this was nice in buy. this was nice in buy.
-                                    this was nice in buy this was nice in buy this was nice in buy this was nice in buy
-                                    this was nice in
-                                    buy</p>
+                                <p>this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -260,10 +250,8 @@
                                 <p>this was nice in buy</p>
                             </div>
                             <div class="review-block-description">
-                                <p>this was nice in buy. this was nice in buy. this was nice in buy.
-                                    this was nice in buy this was nice in buy this was nice in buy this was nice in buy
-                                    this was nice in
-                                    buy</p>
+                                <p>this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -286,10 +274,8 @@
                                 <p>this was nice in buy</p>
                             </div>
                             <div class="review-block-description">
-                                <p>this was nice in buy. this was nice in buy. this was nice in buy.
-                                    this was nice in buy this was nice in buy this was nice in buy this was nice in buy
-                                    this was nice in
-                                    buy</p>
+                                <p>this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -297,7 +283,8 @@
             </div>
         </div>
 
-    </div> <!-- /container -->
+    </div>
+    <!-- /container -->
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <!-- Script -->
     <script src="/js/product&profile.js"></script>

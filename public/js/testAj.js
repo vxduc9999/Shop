@@ -1,138 +1,84 @@
 // sub quantity
-$(document).on("click", "#sub", function (e) {
+$(document).on("click", "#sub", function(e) {
     if ($(this).next().val() - 1 > 0) {
         // minus quantity
         $(this).next().val(+$(this).next().val() - 1);
-        // get current quantity
+        // get quantity current
         var quantity = $(this).next().val();
-        // url
-        var url = $('#url').val();
+
+        // order_detail id
+        var order_id = $(this)[0].value;
         // product_id
-        var product_id = $('#product_id').val();
-        // price
-        var price = $('#price').val();
-        // purchase_id
-        var purchase_id = $('#purchase_id').val();
-        // color name of product want to update
-        var product_color = $(this)[0].value;
-        // total all
-        var total = $('#total').val();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        var product_id = $('#product_id_' + order_id).val();
         $.ajax({
             type: "POST",
-            url: url,
+            url: '/sub-quantity',
             datatype: "JSON",
             async: false,
             data: {
-                name: "sub",
-                purchase_id: purchase_id,
+                order_id: order_id,
                 product_id: product_id,
-                product_color: product_color,
-                quantity: quantity,
-                price: price
+                quantity: quantity
             },
-            success: function (msg) {
-                var msg = JSON.parse(msg);
-                console.log(msg[0]);
-                document.getElementById("totalSum").textContent = msg[0] + "đ";
-                document.getElementById("totalSum").value = msg[0];
+            success: function(result) {
+                result = JSON.parse(result);
+                document.getElementById("totalSum").textContent = result.total + "đ";
             }
         });
     }
 });
 
 // add quantity
-$(document).on("click", "#add", function (e) {
+$(document).on("click", "#add", function(e) {
 
     // add quantity
     $(this).prev().val(+$(this).prev().val() + 1);
     // get current quantity
     var quantity = $(this).prev().val();
-    // url
-    var url = $('#url').val();
+    // order_detail id
+    var order_id = $(this)[0].value;
     // product_id
-    var product_id = $('#product_id').val();
-    // price
-    var price = $('#price').val();
-    // purchase_id
-    var purchase_id = $('#purchase_id').val();
-    // color name of product want to update
-    var product_color = $(this)[0].value;
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    var product_id = $('#product_id_' + order_id).val();
     $.ajax({
         type: "POST",
-        url: url,
+        url: '/plus-quantity',
         datatype: "JSON",
         async: false,
         data: {
-            name: "add",
-            purchase_id: purchase_id,
+            order_id: order_id,
             product_id: product_id,
-            product_color: product_color,
-            quantity: quantity,
-            price: price
+            quantity: quantity
         },
-        success: function (msg) {
-            var msg = JSON.parse(msg);
-            console.log(msg[0]);
-            document.getElementById("totalSum").textContent = msg[0] + "đ";
-            document.getElementById("totalSum").value = msg[0];
+        success: function(result) {
+            result = JSON.parse(result);
+            document.getElementById("totalSum").textContent = result.total + "đ";
         }
     });
-    console.log("hello")
 });
 
 //delete product
-$(document).on("click", "#del", function (e) {
+$(document).on("click", "#del", function(e) {
     if (confirm("Are you sure delete this ?")) {
-        // url
-        var url = $('#url').val();
-        // product_id
-        var product_id = $('#product_id').val();
-        // purchase_id
-        var purchase_id = $('#purchase_id').val();
-        // quantity
-        var quantity = $('#counter').val();
-        // price
-        var price = $('#price').val();
-        // color name of product want to update
-        var product_color = $(this)[0].value;
+        // order_detail id
+        var order_id = $(this)[0].value;
 
-        var id_holder = "deleteItem_" + product_color;
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        var id_holder = "deleteItem_" + order_id;
         $.ajax({
             type: "POST",
-            url: url,
+            url: '/del-product-cart',
             datatype: "JSON",
             async: false,
             data: {
-                name: "del",
-                purchase_id: purchase_id,
-                product_id: product_id,
-                product_color: product_color,
-                quantity: quantity,
-                price: price
+                order_id: order_id
             },
-            success: function (msg) {
-                var msg = JSON.parse(msg);
-                if (msg[0] == "empty") {
+            success: function(result) {
+                var result = JSON.parse(result);
+                console.log(result);
+                if (result.total == 0) {
                     $('#order_sumary')[0].innerHTML = "<h1>Your Cart is Empty</h1><a href='/'>Trang chủ</a>";
                 }
-                document.getElementById("totalSum").textContent = msg[0] + "đ";
-                document.getElementById("totalSum").value = msg[0];
-                $('.row').each(function () {
+                document.getElementById("totalSum").textContent = result.total + "đ";
+                $('.row').each(function() {
                     if ($(this)[0].id === id_holder) {
                         $(this)[0].innerHTML = "";
                         return false;
@@ -165,17 +111,16 @@ function validateForm() {
     document.getElementById('pay').value = payment;
 }
 
-$(document).ready(function () {
-    $('#form3Example5').blur(function (e) {
-        if (!validatePhone('form3Example5')) {
-            $('#spnPhoneStatus').html('Invalid');
-            $('#spnPhoneStatus').css('color', 'red');
-        }
-        else {
-            $('#spnPhoneStatus').html('');
-        }
-    });
-});
+// $(document).ready(function() {
+//     $('#form3Example5').blur(function(e) {
+//         if (!validatePhone('form3Example5')) {
+//             $('#spnPhoneStatus').html('Invalid');
+//             $('#spnPhoneStatus').css('color', 'red');
+//         } else {
+//             $('#spnPhoneStatus').html('');
+//         }
+//     });
+// });
 
 
 function validatePhone(txtPhone) {
@@ -183,16 +128,14 @@ function validatePhone(txtPhone) {
     var filter = /^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/;
     if (filter.test(a)) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
 
-
 function validateInformationCustomer() {
-    var name = document.getElementById('form3Example11').value;
+    var name = document.getElementById('form3Example1').value;
     var phone = document.getElementById('form3Example5').value;
     var adress = document.getElementById('form3Example4').value;
 
@@ -200,11 +143,40 @@ function validateInformationCustomer() {
         alert("Mày chưa điền đủ thông tin kìa");
         return false;
     }
-
-    document.getElementById('form3Example1').value = name;
-    document.getElementById('form3Example2').value = phone;
-    document.getElementById('form3Example3').value = adress;
-
-
-
 }
+
+$(document).on("click", "#confirm_order", function(e) {
+    var order_id = $(this)[0].value;
+    var name = $('#form3Example1').val();
+    var address = $('#form3Example4').val();
+    var phone = $('#form3Example5').val();
+    let payment_method = "";
+    $('#payment').each(function() {
+        if ($(this).find('input[type="radio"]:checked').length > 0) {
+            payment_method = $(this).find('input[type="radio"]:checked').val();
+        }
+    });
+    if (name == "" || phone == "" || address == "") {
+        alert("Mày chưa điền đủ thông tin kìa");
+        return false;
+    } else {
+        $.ajax({
+            type: "POST",
+            url: '/pay',
+            datatype: "JSON",
+            async: true,
+            data: {
+                order_id: order_id,
+                name: name,
+                address: address,
+                phone: phone,
+                payment_method: payment_method
+            },
+            success: function(result) {
+                result = JSON.parse(result);
+                console.log(result);
+                window.location.href = "http://" + result.header + "/user/order-list";
+            }
+        });
+    }
+});

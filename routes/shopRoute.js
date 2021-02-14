@@ -8,12 +8,6 @@ router.get('/', Shop.getHomePage);
 
 router.get('/detail/:slug', Shop.getDetailProduct);
 
-router.get('/add', Shop.getAddToDB);
-
-router.post('/add', Shop.addToDB);
-
-router.put('/update/:id', Shop.updateById);
-
-router.delete('/delete/:id', Shop.deleteById)
+router.post('/detail/:slug', Shop.postDetailProduct);
 
 module.exports = router;

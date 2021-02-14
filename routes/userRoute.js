@@ -35,4 +35,5 @@ router.post('/signup', user.postSignup);
 
 router.get('/verify-email', user.getVerifyEmail);
 
+router.get('/user/order-list', user.orderList);
 module.exports = router;

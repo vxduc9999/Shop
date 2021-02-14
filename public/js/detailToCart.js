@@ -3,7 +3,8 @@ document.getElementById('counter').addEventListener("input", checkValidQuantity)
 
 function checkValidQuantity() {
     const amount = parseInt(document.getElementById('counter').value);
-    const max_amount = parseInt(document.getElementById('maxQuantity').value);
+    //const max_amount = parseInt(document.getElementById('maxQuantity').value);
+    const max_amount = 100;
     if (amount < 1) {
         document.getElementById('counter').value = 1;
     }

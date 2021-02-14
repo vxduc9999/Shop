@@ -4,9 +4,10 @@ const db = require('../config/db');
 
 // products
 const products = db.define('products', {
-    product_id: {
+    id: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     product_name: {
         type: Sequelize.STRING
@@ -49,7 +50,8 @@ const products = db.define('products', {
 const wishlists = db.define('wishlists', {
     id: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     product_id: {
         type: Sequelize.INTEGER
@@ -60,50 +62,13 @@ const wishlists = db.define('wishlists', {
 }, {
     timestamps: false
 });
-
-
-// order_detail
-const order_detail = db.define('order_detail', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true
-    },
-    product_id: {
-        type: Sequelize.INTEGER
-    },
-    order_id: {
-        type: Sequelize.INTEGER
-    },
-    user_id: {
-        type: Sequelize.INTEGER
-    },
-    price: {
-        type: Sequelize.BIGINT
-    },
-    quantity: {
-        type: Sequelize.BIGINT
-    },
-    total: {
-        type: Sequelize.BIGINT
-    },
-    createdAt: {
-        type: Sequelize.DATE,
-        field: 'created_at'
-    },
-    updatedAt: {
-        type: Sequelize.DATE,
-        field: 'updated_at'
-    }
-}, {
-    timestamps: false
-});
-
 
 // images
 const images = db.define('images', {
     id: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     product_id: {
         type: Sequelize.INTEGER

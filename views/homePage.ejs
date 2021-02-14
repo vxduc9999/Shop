@@ -7,9 +7,7 @@
     <title>Trang chủ</title>
 
     <!-- Font Family -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700;800&family=Josefin+Slab:ital,wght@0,400;0,600;1,300;1,400;1,600&family=Muli:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700;800&family=Josefin+Slab:ital,wght@0,400;0,600;1,300;1,400;1,600&family=Muli:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet" />
 
     <!-- Bootstrap-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css">
@@ -39,12 +37,17 @@
     <div id="top">
         <div id="top-left">
             <ul>
-                <li><a href="https://www.instagram.com/accounts/login/?hl=vi" target="_blank"
-                        class="fab fa-instagram"></a></li>
-                <li><a href="https://www.facebook.com/" target="_blank" class="fab fa-facebook-square"></a></li>
-                <li><a href="https://login.yahoo.com/?.intl=us&lang=vi-VN&.src=ym" target="_blank"
-                        class="fab fa-yahoo"></a></li>
-                <li><a href="https://twitter.com/login?lang=vi" target="_blank" class="fab fa-twitter-square"></a>
+                <li>
+                    <a href="https://www.instagram.com/accounts/login/?hl=vi" target="_blank" class="fab fa-instagram"></a>
+                </li>
+                <li>
+                    <a href="https://www.facebook.com/" target="_blank" class="fab fa-facebook-square"></a>
+                </li>
+                <li>
+                    <a href="https://login.yahoo.com/?.intl=us&lang=vi-VN&.src=ym" target="_blank" class="fab fa-yahoo"></a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/login?lang=vi" target="_blank" class="fab fa-twitter-square"></a>
                 </li>
             </ul>
         </div>
@@ -54,19 +57,19 @@
                 <% if (!isAuthenticated) { %>
                     <li class="An"><a href="/signin"><b>Đăng
                                 nhập</b></a></liclass="An">
-                    <li><i class="fas fa-user"></i></li>
+                        <li><i class="fas fa-user"></i></li>
 
-                    <li class="An">|</li class="An">
-                    <li class="An"><a href="/signup"><b>Đăng
+                        <li class="An">|</li class="An">
+                        <li class="An"><a href="/signup"><b>Đăng
                                 ký</b></a></li class="An">
-                    <% } else { %>
-                        <form action="/logout" method="post">
-                            <button type="submit">
+                        <% } else { %>
+                            <form action="/logout" method="post">
+                                <button type="submit">
                                 <li class="An"><b>Đăng Xuất</b></a></li class="An">
                             </button>
 
-                        </form>
-                        <% } %>
+                            </form>
+                            <% } %>
             </ul>
         </div>
     </div>
@@ -111,7 +114,7 @@
                                     </li>
                                     <li>
                                         <div class="cart_link">
-                                            <a href=""><i class="ion-android-cart"></i></a>
+                                            <a href="/cart"><i class="ion-android-cart"></i></a>
                                         </div>
                                     </li>
                                 </ul>
@@ -303,88 +306,85 @@
             </section>
 
         </main>
-    </div>
-    <!-- End Main -->
-
-    <!-- Product Page -->
-
-
-
-
-    <!-- --------------------------- Footer ---------------------------------------- -->
-
-    <footer class="footer">
-        <div class="container">
-            <div class="about-us" data-aos="fade-right" data-aos-delay="200">
-                <h2>About us</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis
-                    iure, autem nulla tenetur repellendus.</p>
-            </div>
-            <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
-                <h2>Rjfjhh</h2>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis aperiam sed facilis eaque.
-                    Exercitationem expedita nam aspernatur quia hic repudiandae illo tempora quos est ipsam voluptas
-                    dolorem, distinctio nulla neque.</p>
-                <div class="form-element">
-                    <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
-                </div>
-            </div>
-            <div class="instagram" data-aos="fade-left" data-aos-delay="200">
-                <h2>Our Teams</h2>
-                <div class="flex-row">
-                    <img src="./assets/instagram/thumb-card3.png" alt="insta1">
-                    <img src="./assets/instagram/thumb-card4.png" alt="insta2">
-                </div>
-                <div class="flex-row">
-                    <img src="./assets/instagram/thumb-card6.png" alt="insta4">
-                    <img src="./assets/instagram/thumb-card7.png" alt="insta5">
-                </div>
-            </div>
-            <div class="follow" data-aos="fade-left" data-aos-delay="200">
-                <h2>Follow us</h2>
-                <p>Let us be Social</p>
-                <div>
-                    <i class="fab fa-facebook-f"></i>
-                    <i class="fab fa-twitter"></i>
-                    <i class="fab fa-instagram"></i>
-                    <i class="fab fa-youtube"></i>
-                </div>
-            </div>
         </div>
-        <div class="rights flex-row">
-            <h4 class="text-gray">
-                <a href="#" target="_black">AECC Team</a>
-            </h4>
-        </div>
-        <div class="move-up">
-            <span><i class="fas fa-arrow-circle-up fa-2x"></i></span>
-        </div>
-    </footer>
+        <!-- End Main -->
 
-    <!-- -------------x------------- Footer --------------------x------------------- -->
+        <!-- Product Page -->
 
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
-    <!-- JavaScript Bundle with Popper.js -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
-    <!-- Jquery Library file -->
-    <script src="/js/homePagejs/Jquery3.4.1.min.js"></script>
-    <!-- --------- Owl-Carousel js ------------------->
-    <script src="/js/homePagejs/owl.carousel.min.js"></script>
+        <!-- --------------------------- Footer ---------------------------------------- -->
 
-    <!-- ------------ AOS js Library  ------------------------- -->
-    <script src="/js/homePagejs/aos.js"></script>
+        <footer class="footer">
+            <div class="container">
+                <div class="about-us" data-aos="fade-right" data-aos-delay="200">
+                    <h2>About us</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quia atque nemo ad modi officiis iure, autem nulla tenetur repellendus.</p>
+                </div>
+                <div class="newsletter" data-aos="fade-right" data-aos-delay="200">
+                    <h2>Rjfjhh</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis aperiam sed facilis eaque. Exercitationem expedita nam aspernatur quia hic repudiandae illo tempora quos est ipsam voluptas dolorem, distinctio nulla neque.</p>
+                    <div class="form-element">
+                        <input type="text" placeholder="Email"><span><i class="fas fa-chevron-right"></i></span>
+                    </div>
+                </div>
+                <div class="instagram" data-aos="fade-left" data-aos-delay="200">
+                    <h2>Our Teams</h2>
+                    <div class="flex-row">
+                        <img src="./assets/instagram/thumb-card3.png" alt="insta1">
+                        <img src="./assets/instagram/thumb-card4.png" alt="insta2">
+                    </div>
+                    <div class="flex-row">
+                        <img src="./assets/instagram/thumb-card6.png" alt="insta4">
+                        <img src="./assets/instagram/thumb-card7.png" alt="insta5">
+                    </div>
+                </div>
+                <div class="follow" data-aos="fade-left" data-aos-delay="200">
+                    <h2>Follow us</h2>
+                    <p>Let us be Social</p>
+                    <div>
+                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="rights flex-row">
+                <h4 class="text-gray">
+                    <a href="#" target="_black">AECC Team</a>
+                </h4>
+            </div>
+            <div class="move-up">
+                <span><i class="fas fa-arrow-circle-up fa-2x"></i></span>
+            </div>
+        </footer>
 
-    <!-- Custom Javascript file -->
-    <script src="/js/homePagejs/main.js"></script>
-    <script src="/js/homePagejs/sp.js"></script>
-    <script src="/js/love_product.js"></script>
+        <!-- -------------x------------- Footer --------------------x------------------- -->
+
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+        <!-- JavaScript Bundle with Popper.js -->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+        <!-- Jquery Library file -->
+        <script src="/js/homePagejs/Jquery3.4.1.min.js"></script>
+        <!-- --------- Owl-Carousel js ------------------->
+        <script src="/js/homePagejs/owl.carousel.min.js"></script>
+
+        <!-- ------------ AOS js Library  ------------------------- -->
+        <script src="/js/homePagejs/aos.js"></script>
+
+        <!-- Custom Javascript file -->
+        <script src="/js/homePagejs/main.js"></script>
+        <script src="/js/homePagejs/sp.js"></script>
+        <script src="/js/love_product.js"></script>
 </body>
 
 </html>
