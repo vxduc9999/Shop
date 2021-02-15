@@ -180,3 +180,35 @@ $(document).on("click", "#confirm_order", function(e) {
         });
     }
 });
+
+$("#loveproduct").click(function() {
+    var product_id = $("#product_id").val();
+    var val = $('#loveproduct img').attr('alt');
+    var oldSrc = $('#loveproduct img').attr('src');
+    $.ajax({
+        type: "POST",
+        url: '/love-product',
+        datatype: "JSON",
+        async: true,
+        data: {
+            product_id: product_id,
+            val: val
+        },
+        success: function(result) {
+            result = JSON.parse(result);
+            if (result.result == "1") {
+                var newSrc = '../images/like/icons-liked.svg';
+                var newAlt = 2;
+                $('img[src="' + oldSrc + '"]').attr('src', newSrc);
+                $('img[alt="' + val + '"]').attr('alt', newAlt);
+            } else if (result.result == "2") {
+                var newSrc = '../images/like/icons-like.svg';
+                var newAlt = 1;
+                $('img[src="' + oldSrc + '"]').attr('src', newSrc);
+                $('img[alt="' + val + '"]').attr('alt', newAlt);
+            } else {
+                window.location.href = "http://" + result.header + "/signin";
+            }
+        }
+    });
+});

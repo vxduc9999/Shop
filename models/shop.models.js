@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const User = require('../models/user.models').users;
 const db = require('../config/db');
 
 
@@ -42,8 +43,7 @@ const products = db.define('products', {
         field: 'updated_at'
     }
 }, {
-    timestamps: false,
-    freezeTableName: true
+    timestamps: false
 });
 
 // whislist
@@ -91,6 +91,7 @@ const images = db.define('images', {
 
 products.hasMany(images, { foreignKey: 'product_id' })
 images.belongsTo(products, { foreignKey: 'product_id' })
+
 
 module.exports = {
     products,

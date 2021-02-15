@@ -6,6 +6,7 @@ const Payment = require('../models/user.models').payment;
 const Status = require('../models/user.models').status_order;
 const Order_detail = require('../models/order.models').order_detail;
 const Product = require('../models/shop.models').products;
+const Wishlist = require('../models/shop.models').wishlists;
 const sgMail = require('@sendgrid/mail')
 const crypto = require('crypto');
 const { Op } = require('sequelize');
@@ -37,6 +38,11 @@ exports.postSignin = async(req, res, next) => {
                     } else if (await req.session.currentPage === "orderList") {
                         delete req.session.currentPage;
                         res.redirect('/user/order-list');
+                    } else if (await req.session.currentPage === "loveproduct") {
+                        delete req.session.currentPage;
+                        const product = await Product.findOne({ where: { id: await req.session.product_id } })
+
+                        res.redirect('/detail/' + product.product_slug);
                     }
                     res.redirect('/');
                 });
@@ -85,7 +91,6 @@ exports.postSignup = async(req, res, next) => {
                     }
                     User.count().then(c => {
                         User.create({
-                            id: c + 1,
                             email: email,
                             password: bcrypt.hashSync(password, 12),
                             status: emailToken
@@ -199,12 +204,11 @@ exports.postChangePassword = async(req, res, next) => {
     }
 }
 
-
 exports.orderList = async(req, res, next) => {
     const user = req.session.user;
     if (user == null) {
         req.session.currentPage = "orderList";
-        res.redirect('/signin');
+        return res.redirect('/signin');
     }
     await Order.findAll({
             where: {
@@ -236,4 +240,48 @@ exports.orderList = async(req, res, next) => {
             })
         })
         .catch(err => console.log(err));
+}
+
+exports.postLoveProduct = async(req, res, next) => {
+    const user = req.session.user;
+    const product_id = req.body.product_id;
+    const val = req.body.val;
+    let result = "";
+    var response = {
+        status: 200,
+        success: 'Updated Successfully',
+        header: req.headers.host,
+        result: result
+    }
+    if (user == null) {
+        req.session.currentPage = "loveproduct";
+        req.session.product_id = product_id;
+        return res.end(JSON.stringify(response));
+    }
+
+
+    if (val == 1) {
+        Wishlist.create({
+                product_id: product_id,
+                user_id: user.id
+            })
+            .then(test => {
+                response.result = "1";
+                return res.end(JSON.stringify(response));
+            })
+            .catch(err => console.log(err));
+    } else {
+        Wishlist.destroy({
+                where: {
+                    product_id: product_id,
+                    user_id: user.id
+                }
+            })
+            .then(test => {
+                response.result = "2";
+                return res.end(JSON.stringify(response));
+            })
+            .catch(err => console.log(err));
+
+    }
 }

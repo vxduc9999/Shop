@@ -79,23 +79,57 @@ exports.getHomePage = async(req, res, next) => {
 }
 
 exports.getDetailProduct = (req, res, next) => {
+    const user = req.session.user;
     const slug = req.params.slug;
-    products.findOne({
-            where: {
-                product_slug: {
-                    [Op.eq]: slug
-                }
-            },
-            include: images
-        })
-        .then(product => {
-            res.status(200).render('products/productDetail', {
-                product
-            });
-        })
-        .catch(err => console.log(err))
-
-
+    // chưa có user
+    if (user == null) {
+        products.findOne({
+                where: {
+                    product_slug: {
+                        [Op.eq]: slug
+                    }
+                },
+                include: [{
+                    model: images,
+                    limit: 4
+                }]
+            })
+            .then(product => {
+                return res.status(200).render('products/productDetail', {
+                    product
+                });
+            })
+            .catch(err => console.log(err))
+    } else {
+        // có user
+        products.findOne({
+                where: {
+                    product_slug: slug
+                },
+                include: [{
+                        model: users,
+                        as: 'productLiked',
+                        through: { // if not found then return empty array []
+                            where: {
+                                user_id: user.id
+                            }
+                        }
+                    },
+                    {
+                        model: images
+                    },
+                ],
+                order: [
+                    [{ model: images }, 'id', 'ASC']
+                ]
+            })
+            .then(product => {
+                return res.status(200).render('products/productDetail', {
+                    product
+                });
+            })
+            .catch(err => console.log(err))
+    }
 }
 
 exports.postDetailProduct = async(req, res, next) => {
@@ -178,5 +212,3 @@ exports.postDetailProduct = async(req, res, next) => {
         })
         .catch(err => console.log(err));
 }
-
-

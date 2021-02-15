@@ -36,4 +36,7 @@ router.post('/signup', user.postSignup);
 router.get('/verify-email', user.getVerifyEmail);
 
 router.get('/user/order-list', user.orderList);
+
+router.post('/love-product', user.postLoveProduct);
+
 module.exports = router;

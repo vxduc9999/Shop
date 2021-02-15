@@ -58,7 +58,15 @@
                     <h1 class="product-title">
                         <%= product.product_name %>
                     </h1>
-                    <i class="far fa-heart" style="font-size: 30px;margin: 1.4rem 0;"><sup id="items-added"></sup></i>
+                    <!-- yêu thích -->
+                    <input type="hidden" id="product_id" value="<%=product.id%>">
+                    <div id="loveproduct">
+                        <% if(product.productLiked === undefined || product.productLiked.length == 0) { %>
+                            <img src="../images/like/icons-like.svg" alt="1" style="width:40px;height:40px;">
+                            <% } else { %>
+                                <img src="../images/like/icons-liked.svg" alt="2" style="width:40px;height:40px;">
+                                <% } %>
+                    </div>
                 </div>
                 <div class="infos">
                     <!--Đánh giá-->
@@ -291,6 +299,7 @@
 
     <!-- Process back-end -->
     <script src="/js/detailToCart.js"></script>
+    <script src="/js/testAj.js"></script>
 </body>
 
 </html>

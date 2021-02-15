@@ -10,7 +10,7 @@ exports.getCart = async(req, res, next) => {
     const user = req.session.user;
     if (user == null) {
         req.session.currentPage = "cart";
-        res.redirect('/signin');
+        return res.redirect('/signin');
     }
     await Order.findOne({
             where: {

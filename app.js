@@ -3,6 +3,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session');
 const userModel = require('./models/user.models').users;
+const Products = require('./models/shop.models').products;
+const wishlists = require('./models/shop.models').wishlists;
 require('dotenv').config();
 
 const app = express();
@@ -41,6 +43,21 @@ app.use((req, res, next) => {
 app.use(Shop);
 app.use(User);
 app.use(Cart);
+
+
+Products.belongsToMany(userModel, {
+    as: 'productLiked',
+    through: wishlists,
+    foreignKey: 'product_id'
+});
+
+userModel.belongsToMany(Products, {
+    as: 'userProduct',
+    through: wishlists,
+    foreignKey: 'user_id'
+});
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
