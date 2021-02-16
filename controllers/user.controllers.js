@@ -41,8 +41,10 @@ exports.postSignin = async(req, res, next) => {
                     } else if (await req.session.currentPage === "loveproduct") {
                         delete req.session.currentPage;
                         const product = await Product.findOne({ where: { id: await req.session.product_id } })
-
                         res.redirect('/detail/' + product.product_slug);
+                    } else if (await req.session.currentPage === "wistlist") {
+                        delete req.session.currentPage;
+                        res.redirect('/user/wishlist');
                     }
                     res.redirect('/');
                 });
@@ -284,4 +286,49 @@ exports.postLoveProduct = async(req, res, next) => {
             .catch(err => console.log(err));
 
     }
+}
+
+exports.getWistlist = async(req, res, next) => {
+    const user = req.session.user;
+    if (user == null) {
+        req.session.currentPage = "wistlist";
+        return res.redirect('/signin');
+    }
+    User.findAll({
+            where: {
+                id: user.id
+            },
+            attributes: [],
+            include: [{
+                model: Product,
+                as: 'userProduct'
+            }],
+            order: [
+                [sequelize.literal('"userProduct->wishlists"."product_id"'), 'ASC']
+            ]
+        })
+        .then(wistlist => {
+            return res.status(200).render('products/wishlists', {
+                wistlist
+            });
+        })
+        .catch(err => console.log(err));
+}
+
+exports.postDelWish = (req, res, next) => {
+    const wish_id = req.body.wish_id;
+    Wishlist.destroy({
+            where: {
+                id: wish_id
+            }
+        })
+        .then(wistlist => {
+            //res.json(wistlist);
+            var response = {
+                status: 200,
+                success: 'Del Successfully'
+            }
+            res.end(JSON.stringify(response));
+        })
+        .catch(err => console.log(err));
 }

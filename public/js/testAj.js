@@ -212,3 +212,27 @@ $("#loveproduct").click(function() {
         }
     });
 });
+
+$(document).on("click", "#xoa", function(e) {
+    var wish_id = $(this)[0].value;
+    const id_holder = "wish_" + $(this)[0].value;
+    $.ajax({
+        type: "POST",
+        url: '/del-wish',
+        datatype: "JSON",
+        async: false,
+        data: {
+            wish_id: wish_id
+        },
+        success: function(result) {
+            var result = JSON.parse(result);
+            console.log(result);
+            $('.card').each(function() {
+                if ($(this)[0].id === id_holder) {
+                    $(this)[0].innerHTML = "";
+                    return false;
+                }
+            });
+        }
+    });
+});

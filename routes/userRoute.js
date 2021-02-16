@@ -37,6 +37,10 @@ router.get('/verify-email', user.getVerifyEmail);
 
 router.get('/user/order-list', user.orderList);
 
+router.get('/user/wishlist', user.getWistlist);
+
+router.post('/del-wish', user.postDelWish);
+
 router.post('/love-product', user.postLoveProduct);
 
 module.exports = router;
