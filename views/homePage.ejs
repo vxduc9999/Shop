@@ -30,6 +30,8 @@
     <!-- Custom Style -->
     <link rel="stylesheet" href="css/homePagecss/Style.css">
 
+
+
 </head>
 
 <body>
@@ -88,7 +90,7 @@
                                 <ul>
                                     <li class="active">
                                         <div class="contact_icone" style="cursor: pointer;">
-                                            <img src="/images/image_welcome/Untitled-1-removebg-preview.png" alt="">
+                                            <img src="images/image_welcome/Untitled-1-removebg-preview.png" alt="">
                                         </div>
                                     </li>
                                     <li><a href="#">Mac</i></a></li>
@@ -101,7 +103,7 @@
                                             <a href="#"><i class="ion-ios-search-strong"></i></a>
                                             <div class="dropdown_search">
                                                 <form action="#">
-                                                    <input type="text" placeholder="Search Product ....">
+                                                    <input type="text" id="searchName" placeholder="Search Product ....">
                                                     <button type="submit"><i class="ion-ios-search-strong"></i></button>
                                                 </form>
                                             </div>
@@ -133,7 +135,7 @@
         <header class="header_area header_black">
             <!--slider section starts -->
             <div class="slider_area slider_black owl-carousel">
-                <div class="single_slider" data-bgimg="/images/image_welcome/slide1.jpg}">
+                <div class="single_slider" data-bgimg="images/image_welcome/slide1.jpg">
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-12">
@@ -149,7 +151,7 @@
                     </div>
 
                 </div>
-                <div class="single_slider" data-bgimg="/images/image_welcome/slide3.jpg">
+                <div class="single_slider" data-bgimg="images/image_welcome/slide3.jpg">
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-12">
@@ -165,7 +167,7 @@
                     </div>
 
                 </div>
-                <div class="single_slider" data-bgimg="/images/image_welcome/slide2.jpg">
+                <div class="single_slider" data-bgimg="images/image_welcome/slide2.jpg">
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-12">
@@ -321,12 +323,12 @@
                 <div class="instagram" data-aos="fade-left" data-aos-delay="200">
                     <h2>Our Teams</h2>
                     <div class="flex-row">
-                        <img src="./assets/instagram/thumb-card3.png" alt="insta1">
-                        <img src="./assets/instagram/thumb-card4.png" alt="insta2">
+                        <img src="instagram/thumb-card3.png" alt="insta1">
+                        <img src="instagram/thumb-card4.png" alt="insta2">
                     </div>
                     <div class="flex-row">
-                        <img src="./assets/instagram/thumb-card6.png" alt="insta4">
-                        <img src="./assets/instagram/thumb-card7.png" alt="insta5">
+                        <img src="instagram/thumb-card6.png" alt="insta4">
+                        <img src="instagram/thumb-card7.png" alt="insta5">
                     </div>
                 </div>
                 <div class="follow" data-aos="fade-left" data-aos-delay="200">
@@ -374,6 +376,37 @@
         <script src="/js/homePagejs/main.js"></script>
         <script src="/js/homePagejs/sp.js"></script>
         <script src="/js/love_product.js"></script>
+
+
+        <!-- test -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            $(function() {
+                $('#searchName').autocomplete({
+                    source: function(req, res) {
+                        $.ajax({
+                            url: "autocomplete/",
+                            dataType: "jsonp",
+                            type: "GET",
+                            data: req,
+                            success: function(data) {
+                                res(data);
+                            },
+                            error: function(err) {
+                                console.log(err.status);
+                            }
+                        });
+                    },
+                    select: function(even, ui) {
+                        if (ui.item) {
+                            $('#searchName').text(ui.item.label);
+                        }
+                    }
+                })
+            })
+        </script>
 </body>
 
 </html>

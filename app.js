@@ -12,7 +12,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
 
 const port = process.env.PORT
@@ -57,6 +57,27 @@ userModel.belongsToMany(Products, {
     foreignKey: 'user_id'
 });
 
+
+//const client = require('./config/connect')
+
+// Products
+//     .findAll()
+//     .then(products => {
+//         for (let p of products) {
+//             client.index({
+//                 index: 'blog',
+//                 id: p.id,
+//                 type: 'posts',
+//                 body: {
+//                     "product_name": p.product_name,
+//                     "product_slug": p.product_slug,
+//                 }
+//             }, function(err, resp, status) {
+//                 console.log("ok");
+//             });
+//         }
+//     })
+//     .catch(err => console.log(err));
 
 
 app.listen(port, () => {

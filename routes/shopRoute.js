@@ -10,4 +10,5 @@ router.get('/detail/:slug', Shop.getDetailProduct);
 
 router.post('/detail/:slug', Shop.postDetailProduct);
 
+router.get('/autocomplete', Shop.getSearch);
 module.exports = router;

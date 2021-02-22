@@ -60,7 +60,6 @@ exports.getHomePage = async(req, res, next) => {
                             ]
                         })
                         .then(bestSellingProducts => {
-                            //res.status(200).json(bestSellingProducts);
                             const data = {
                                 newProducts: productsNew,
                                 bestLoveProducts: wishlistsProducts,
@@ -211,4 +210,30 @@ exports.postDetailProduct = async(req, res, next) => {
             }
         })
         .catch(err => console.log(err));
+}
+
+exports.getSearch = async(req, res, next) => {
+    var regex = req.query["term"];
+    products.findAll({
+            where: {
+                product_slug: {
+                    [Op.like]: '%' + regex + '%'
+                }
+            },
+            limit: 5
+        })
+        .then(pros => {
+            var result = [];
+            pros.forEach(pro => {
+                let obj = {
+                    id: pro.id,
+                    label: pro.product_name
+                };
+                result.push(obj);
+            });
+            res.jsonp(result);
+        })
+        .catch(err => console.log(err))
+
+
 }
